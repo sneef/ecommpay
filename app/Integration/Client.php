@@ -26,7 +26,7 @@ class Client {
 
         if($project['dataType'] === 'soap') {
             //Здесь делаем условный SOAP-запрос
-        } else if ($project['dataType'] === 'soap') {
+        } else if ($project['dataType'] === 'json') {
             //Здесь делаем условный CURL-запрос
         }
 
