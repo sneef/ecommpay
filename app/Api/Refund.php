@@ -1,6 +1,8 @@
 <?php
 
-class Purchase {
+namespace App\Api;
+
+class Refund {
     private $client;
     private $request;
 
@@ -10,15 +12,16 @@ class Purchase {
     }
 
     public function execute() {
-        $url = 'http://example.com/purchase';
         $data = [
+            'payment_id' => $this->request['payment_id'],
             'amount' => $this->request['amount'],
-            'currency' => $this->request['currency'],
+            'operation_id' => $this->request['operation_id'],
             'pan' => $this->request['pan'],
+            'currency' => $this->request['currency'],
             'project_id' => $this->request['project_id']
         ];
 
-        $responseCode = $this->client->sendRequest($url, $data, 'json');
+        $responseCode = $this->client->sendRequest('refund', $data, $this->request['project_id']);
 
         return $responseCode === 200;
     }

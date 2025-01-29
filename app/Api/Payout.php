@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Api;
+
 class Payout {
     private $client;
     private $request;
@@ -10,7 +12,6 @@ class Payout {
     }
 
     public function execute() {
-        $url = 'http://example.com/payout';
         $data = [
             'amount' => $this->request['amount'],
             'currency' => $this->request['currency'],
@@ -18,7 +19,7 @@ class Payout {
             'project_id' => $this->request['project_id']
         ];
 
-        $responseCode = $this->client->sendRequest($url, $data, 'json');
+        $responseCode = $this->client->sendRequest('payout', $data, $this->request['project_id']);
 
         return $responseCode === 200;
     }

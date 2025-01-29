@@ -2,10 +2,10 @@
 
 require_once 'loader.php';
 
-// Пример тестового кейса для операции Purchase
-function testPurchase() {
+// Пример тестового кейса для операции Payout
+function testPayout() {
     $request = [
-        'type' => 'purchase',
+        'type' => 'payout',
         'payment_id' => '35236',
         'amount' => 1000,
         'currency' => 'USD',
@@ -19,4 +19,4 @@ function testPurchase() {
     echo $status ? "TEST OK\n" : "TEST FAILED\n";
 }
 
-testPurchase();
+testPayout();

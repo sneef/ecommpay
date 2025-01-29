@@ -2,14 +2,13 @@
 
 require_once 'loader.php';
 
-// Пример тестового кейса для операции Purchase
-function testPurchase() {
+// Пример тестового кейса для операции Refund
+function testRefund() {
     $request = [
-        'type' => 'purchase',
-        'payment_id' => '35236',
+        'type' => 'refund',
+        'payment_id' => '2',
         'amount' => 1000,
-        'currency' => 'USD',
-        'pan' => '1234567890123456',
+        'operation_id' => 'USD',
         'project_id' => '2001'
     ];
 
@@ -19,4 +18,4 @@ function testPurchase() {
     echo $status ? "TEST OK\n" : "TEST FAILED\n";
 }
 
-testPurchase();
+testRefund();
