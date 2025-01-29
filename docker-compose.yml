@@ -1,0 +1,40 @@
+version: "3.7"
+services:
+    app:
+        build:
+            args:
+                user: git
+                password: Rn742NrLiE2
+                uid: 1401
+            context: ./
+            dockerfile: ecommpay-app.dockerfile
+        image: ftt-app
+        container_name: ftt-app
+        restart: unless-stopped
+        working_dir: /var/www/html
+        networks:
+            - ftt-app
+        ports:
+            - '9010:9001'
+        volumes:
+            - web_root:/var/www/html
+    nginx:
+        image: nginx:1.17-alpine
+        container_name: ftt-app-nginx
+        restart: unless-stopped
+        ports:
+            - 8020:80
+        volumes:
+            - web_root:/var/www/html
+            - ./.docker-conf/nginx:/etc/nginx/conf.d
+        networks:
+            - ecommpay-network
+networks:
+    ecommpay-network:
+        driver: bridge
+
+volumes:
+    web_root:
+    cache:
+        driver: local
+
