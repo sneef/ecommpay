@@ -8,22 +8,22 @@ services:
                 uid: 1401
             context: ./
             dockerfile: ecommpay-app.dockerfile
-        image: ftt-app
-        container_name: ftt-app
+        image: ecommpay-app
+        container_name: ecommpay-app
         restart: unless-stopped
         working_dir: /var/www/html
         networks:
-            - ftt-app
+            - ecommpay-network
         ports:
-            - '9010:9001'
+            - '9015:9001'
         volumes:
             - web_root:/var/www/html
     nginx:
         image: nginx:1.17-alpine
-        container_name: ftt-app-nginx
+        container_name: ecommpay-app-nginx
         restart: unless-stopped
         ports:
-            - 8020:80
+            - 8021:80
         volumes:
             - web_root:/var/www/html
             - ./.docker-conf/nginx:/etc/nginx/conf.d

@@ -23,15 +23,10 @@ RUN apt-get update && \
     docker-php-ext-install pdo pdo_pgsql pgsql
 # Install PHP extensions
 #RUN docker-php-ext-install mbstring exif pcntl bcmath gd
-RUN pecl update-channels && \
-	pecl install redis
-
-# Get latest Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+RUN pecl update-channels
 
 COPY ./.docker-conf/php /usr/local/etc/php
 
-# Create system user to run Composer and Artisan Commands
 RUN useradd -G www-data,root -u $uid -d /home/$user $user
 RUN mkdir -p /home/$user/.composer && \
     chown -R $user:$user /home/$user
@@ -39,15 +34,12 @@ RUN mkdir -p /home/$user/.composer && \
 # Set working directory
 WORKDIR /var/www/html
 
-COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
-
 RUN apt-get -y update && \
 	apt-get -y install git
 
 #install RSA key for git
 RUN mkdir /root/.ssh/
 ADD ./.docker-conf/.ssh/id_rsa /root/.ssh/id_rsa
-#ADD ./.docker-conf/.ssh/config /root/.ssh/config
 ADD ./.docker-conf/.ssh/id_rsa.pub /root/.ssh/id_rsa.pub
 RUN chmod 600 /root/.ssh/id_rsa
 RUN chmod 600 /root/.ssh/id_rsa.pub
@@ -78,22 +70,10 @@ RUN ssh-keyscan github.com >> /home/git/.ssh/known_hosts
 RUN git clone https://github.com/sneef/ecommpay.git ./ && \
     chmod g+w .git -R
 
-RUN composer install
-
-COPY ./.env.example ./.env
-ADD ./.env /var/www/html/.env
-
-RUN	chmod -R a+rw /var/www/html/storage && \
-    chmod -R 777 /var/www/html/bootstrap/cache && \
-    usermod -aG root $user
+RUN	usermod -aG root $user
 
 RUN git config --global --add safe.directory /var/www/html
 
 RUN usermod -aG sudo git
-
-RUN apt-get -y install npm && \
-    npm install && \
-    npm run build
-#RUN php artisan migrate
 
 USER root
