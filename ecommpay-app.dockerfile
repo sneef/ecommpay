@@ -76,4 +76,6 @@ RUN git config --global --add safe.directory /var/www/html
 
 RUN usermod -aG sudo git
 
+RUN git config --global http.sslVerify false
+
 USER root
