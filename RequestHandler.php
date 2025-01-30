@@ -8,7 +8,6 @@ use App\Api\{
 use App\LocalStorage\Database;
 use App\Integration\Client;
 use App\RequestValidation\{
-    ClientValidation,
     HandlerValidation,
     PayoutValidation,
     PurchaseValidation,
