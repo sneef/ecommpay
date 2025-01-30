@@ -5,7 +5,7 @@ require_once '../loader.php';
 
 try {
     $requestHandler = new RequestHandler();
-    $requestHandler->handle($_GET);
+    $requestHandler->handle($_POST);
 
 } catch(Exception $ex) {
     http_response_code(400);
